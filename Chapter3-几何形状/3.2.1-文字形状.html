@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文字形状</title>
+    <script src="../lib/three.js"></script>
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-2.5, 2.5, 1.875, -1.875, 0.1, 100);
+        camera.position.set(5, 5, 20);
+        camera.lookAt(new THREE.Vector3(1, 0, 0));
+        scene.add(camera);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xffff00,
+            wireframe: true,
+        })
+
+        const loader = new THREE.FontLoader();
+        loader.load('../lib/gentilis_bold.typeface.json', function (font){
+            var mesh = new THREE.Mesh(new THREE.TextGeometry('Hello', {
+                font: font,
+                size: 1,
+                height: 1
+            }), material);
+            scene.add(mesh);
+            renderer.render(scene, camera);
+        })
+    </script>
+</body>
+</html>
