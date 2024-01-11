@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="mainCanvas" width="400px" height="300px"></canvas>
+
+<script type="module">
+    import * as THREE from '../lib/three161.js';
+
+    const renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('mainCanvas')
+    });
+    renderer.setClearColor(0x000000); // black
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(45, 4 / 3, 1, 1000);
+    camera.position.set(0, 0, 5);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
+
+    const material = new THREE.MeshBasicMaterial({
+        color: 0xffffff // white
+    });
+    // plane
+    const planeGeo = new THREE.PlaneGeometry(1.5, 1.5);
+    const plane = new THREE.Mesh(planeGeo, material);
+    plane.position.x = 1;
+    scene.add(plane);
+
+    const vertices = [
+        -1, -1, 0,
+        1, -1, 0,
+        0, 1, 0
+    ]
+    // triangle
+    const triGeo = new THREE.BufferGeometry();
+    triGeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+    const triangle = new THREE.Mesh(triGeo, material);
+    scene.add(triangle);
+
+    renderer.render(scene, camera);
+</script>
+</body>
+</html>
