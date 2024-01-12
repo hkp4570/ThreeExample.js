@@ -15,11 +15,10 @@
  * }
  */
 
-import {
-	ExtrudeGeometry
-} from '/three/build/three.module.js';
-
-class TextGeometry extends ExtrudeGeometry {
+// import {
+// 	ExtrudeGeometry
+// } from '/three/build/three.module.js';
+class TextGeometry extends THREE.ExtrudeGeometry {
 
 	constructor( text, parameters = {} ) {
 

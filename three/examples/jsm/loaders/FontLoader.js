@@ -1,8 +1,10 @@
-import {
-	FileLoader,
-	Loader,
-	ShapePath
-} from '/three/build/three.module.js';
+// import {
+// 	FileLoader,
+// 	Loader,
+// 	ShapePath
+// } from '/three/build/three.module.js';
+
+const { FileLoader, Loader, ShapePath } = THREE;
 
 class FontLoader extends Loader {
 

@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>文字形状</title>
-    <script src="../lib/three.js"></script>
+    <script src="../three/build/three.js"></script>
 </head>
 <body>
     <canvas id="mainCanvas" width="400" height="300"></canvas>
     <script type="module">
+        window.THREE = THREE;
+        import {TextGeometry} from "../three/examples/jsm/geometries/TextGeometry.js";
+        import {FontLoader} from '../three/examples/jsm/loaders/FontLoader.js';
+
         const scene = new THREE.Scene();
         const camera = new THREE.OrthographicCamera(-2.5, 2.5, 1.875, -1.875, 0.1, 100);
         camera.position.set(5, 5, 20);
@@ -23,9 +27,9 @@
             wireframe: true,
         })
 
-        const loader = new THREE.FontLoader();
-        loader.load('../lib/gentilis_bold.typeface.json', function (font){
-            var mesh = new THREE.Mesh(new THREE.TextGeometry('Hello', {
+        const loader = new FontLoader();
+        loader.load('../lib/gentilis_bold.typeface.json', function (font) {
+            const mesh = new THREE.Mesh(new TextGeometry('Hello', {
                 font: font,
                 size: 1,
                 height: 1
