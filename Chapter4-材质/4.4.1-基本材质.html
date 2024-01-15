@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本材质</title>
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import * as THREE from '../lib/three160.js';
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGL1Renderer({
+            canvas: document.getElementById('mainCanvas')
+        });
+        renderer.setClearColor(0x000000);
+        const camera = new THREE.OrthographicCamera(5,-5,-3.75,3.75,0.1,100);
+        camera.position.set(25,25,25);
+        camera.lookAt(new THREE.Vector3(0,0,0));
+        scene.add(camera);
+
+        // * 光照并不会影响到使用基本材质的物体的颜色
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 15, 5);
+        scene.add(light);
+
+        const geometry = new THREE.BoxGeometry(1,1,1);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xff0000,
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        renderer.render(scene, camera);
+    </script>
+</body>
+</html>
