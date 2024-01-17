@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>法线材质</title>
+</head>
+<body>
+<!--    从不同视角观察物体看到的颜色也不同-->
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import * as THREE from '../lib/three160.js';
+
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+        const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+        camera.position.set(10, 15, 25);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        scene.add(camera);
+
+        const material = new THREE.MeshNormalMaterial();
+        const cube = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), material);
+        scene.add(cube);
+
+        function animate() {
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    </script>
+</body>
+</html>

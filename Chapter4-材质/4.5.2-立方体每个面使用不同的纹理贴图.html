@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>立方体每个面使用不同的纹理贴图</title>
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import * as THREE from '../lib/three160.js';
+
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+        const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+        camera.position.set(5, 5, 5);
+        camera.lookAt(new THREE.Vector3());
+        scene.add(camera);
+
+        const maaterials = [];
+        const textureLoader = new THREE.TextureLoader();
+        Array.of(0,1,2,3,4,5).forEach((i) => {
+            maaterials.push(new THREE.MeshBasicMaterial({
+                map: textureLoader.load('../img/' + i + '.png',function(){
+                    renderer.render(scene, camera);
+                }),
+                overdraw: true,
+            }))
+        })
+
+        const cube = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), maaterials);
+        scene.add(cube);
+        renderer.render(scene, camera);
+    </script>
+</body>
+</html>
