@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网格</title>
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import * as THREE from '../lib/three160.js';
+
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+
+        const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+        camera.position.set(5,5,5);
+        camera.lookAt(new THREE.Vector3());
+        scene.add(camera);
+
+        const light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(20, 10, 5);
+        scene.add(light);
+
+        const material = new THREE.MeshLambertMaterial({
+            color: 0xff0000,
+        })
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(1,2,3), material);
+        scene.add(mesh);
+
+        // 直接属性值
+        mesh.material = new THREE.MeshLambertMaterial({
+            color: 0x00ff00
+        })
+        console.log(mesh)
+        let scaleY = 1;
+        let rotationZ = 0;
+        function animate(){
+            mesh.position.x += 0.01;
+            scaleY += 0.01;
+            rotationZ += 0.01
+            mesh.scale.set(1,scaleY, 1);
+            mesh.rotation.z = rotationZ;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
