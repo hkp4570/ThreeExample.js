@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加载外部模型设置材质</title>
+    <!--    <script src="../three/examples/jsm/loaders/OBJLoader.js"></script>-->
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import {OBJLoader} from "../three/examples/jsm/loaders/OBJLoader.js";
+        import * as THREE from '../lib/three160.js';
+
+        let mesh = null;
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+        const camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+        camera.position.set(15, 25, 25);
+        camera.lookAt(new THREE.Vector3(0, 2, 0));
+        scene.add(camera);
+
+        const objLoader = new OBJLoader();
+        objLoader.load('../lib/port.obj', function (obj) {
+            obj.traverse(function (child) {
+                // if (child instanceof THREE.Mesh) {
+                //     child.material.side = THREE.DoubleSide;
+                // }
+                // if(child.type === 'Mesh'){
+                //     child.material.side = THREE.DoubleSide;
+                // }
+                if(child.type === 'Mesh'){
+                    child.material = new THREE.MeshLambertMaterial({
+                        color: 0xffff00,
+                        side: THREE.DoubleSide
+                    });
+                }
+            })
+            mesh = obj;
+            scene.add(obj);
+            draw();
+        })
+
+        const light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(20, 10, 5);
+        scene.add(light);
+
+        function draw() {
+            renderer.render(scene, camera);
+
+            mesh.rotation.y += 0.01;
+            if (mesh.rotation.y > Math.PI * 2) {
+                mesh.rotation.y -= Math.PI * 2;
+            }
+            requestAnimationFrame(draw);
+        }
+    </script>
+</body>
+</html>
