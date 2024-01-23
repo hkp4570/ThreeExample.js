@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点光源</title>
+</head>
+<body>
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+    <script type="module">
+        import * as THREE from '../lib/three160.js';
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('mainCanvas')
+        })
+        renderer.setClearColor(0x000000);
+        const camera = new THREE.OrthographicCamera(-5,5,3.75,-3.75,0.1,100);
+        camera.position.set(5,15,25);
+        camera.lookAt(new THREE.Vector3(0,0,0));
+        scene.add(camera);
+
+        const light = new THREE.PointLight(0xffffff, 2, 100);
+        light.position.set(0,2,3);
+        scene.add(light);
+
+        const greenCube = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), new THREE.MeshLambertMaterial({
+            color: 0x00ff00
+        }))
+        scene.add(greenCube);
+        const whiteCube = new THREE.Mesh(new THREE.BoxGeometry(2,2,2), new THREE.MeshLambertMaterial({
+            color: 0xffffff
+        }))
+        whiteCube.position.x = 3;
+        scene.add(whiteCube);
+
+        renderer.render(scene,camera);
+    </script>
+</body>
+</html>
